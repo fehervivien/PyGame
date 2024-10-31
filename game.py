@@ -2,7 +2,8 @@ import pygame
 from paddle import Paddle
 from ball import Ball
 
-# Játék osztály
+# A játék logikája, beleértve az input kezelést, 
+# a játék állapotának frissítését és a rajzolást.
 class Game:
     def __init__(self):
         pygame.init()  # a pygame inicializálása
