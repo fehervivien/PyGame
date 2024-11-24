@@ -1,0 +1,32 @@
+import unittest
+import pygame
+from game import Game
+
+class TestPerformance(unittest.TestCase):
+    def setUp(self):
+        self.game = Game()
+        self.screen = pygame.display.set_mode((800, 600))
+        self.clock = pygame.time.Clock()
+
+    def test_fps(self):
+        # Futassuk a játékot egy rövid ideig és mérjük az FPS-t
+        frame_count = 0
+        max_frames = 300  # 5 másodpercig futtatjuk 60 FPS mellett
+        while frame_count < max_frames:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.game.running = False
+
+            self.game.handle_input()
+            self.game.update()
+            self.game.draw(self.screen)
+            pygame.display.flip()
+            self.clock.tick(60)  # 60 FPS cél
+            frame_count += 1
+
+        # Ellenőrizzük, hogy az átlagos FPS egy adott küszöbérték felett van-e
+        avg_fps = self.clock.get_fps()
+        self.assertGreater(avg_fps, 50, f"Az átlagos FPS túl alacsony: {avg_fps}")
+
+if __name__ == '__main__':
+    unittest.main()
